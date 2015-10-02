@@ -15,7 +15,7 @@ The Township of Langley has made its cemetery information available on its open 
 Under active development.
 
 ## Goals/Roadmap
-Collaborate with the local tech community to develop project goals and/or a product roadmap.
+
 
 ## Getting Help or Reporting an Issue
 To report bugs/issues/feature requests, please file an [issue](https://github.com/BCDevExchange/cemetery-information/issues).
