@@ -22,8 +22,8 @@ For Phase One of the product road map, please refer to the [bcgov-comment-theme]
 Under active development.
 
 ## Goals/Roadmap
-- Phase One: Improved Commenting System Issue 1 | Issue 2 | Issue 3 (TBD)
-- Phase Two: Plugin Development (TBD)
+- Phase One: Improved Commenting System [Issue 1](https://github.com/bcgov/citizen-engagement-web-toolkit/issues/5) | Issue 2 | Issue 3
+- Phase Two: Additional Plugin Development (TBD)
 - Phase Three: Google Search Appliance Integration (TBD)
 
 ## Getting Help or Reporting an Issue
