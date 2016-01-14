@@ -28,8 +28,8 @@ Always write a clear log message for your commits. One-line messages are fine fo
     > 
     > A paragraph describing what changed and its impact."
 
- ## Coding conventions
- When it comes to PHP coding, we are heavily into [phpDocumentor](http://phpdoc.org/) for keeping to accessible PHP coding conventations.  Looking for a quickstart, check out [phpDocumentor Quickstart](http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_phpDocumentor.quickstart.pkg.html).  Lastly, we also look to [getBootstrap.com](http://getbootstrap.com/) for examples of how to use Bootstrap components and code in JavaScript nicely.
+## Coding conventions
+When it comes to PHP coding, we are heavily into [phpDocumentor](http://phpdoc.org/) for keeping to accessible PHP coding conventations.  Looking for a quickstart, check out [phpDocumentor Quickstart](http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_phpDocumentor.quickstart.pkg.html).  Lastly, we also look to [getBootstrap.com](http://getbootstrap.com/) for examples of how to use Bootstrap components and code in JavaScript nicely.
 
- ###Please Note
- Libraries or third party software that have costs associated with it will not be allowed in the application.
+###Please Note
+Libraries or third party software that have costs associated with it will not be allowed in the application.
