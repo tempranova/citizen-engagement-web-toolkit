@@ -12,7 +12,7 @@ The Citizen Engagement team wants to expand the functionality of the WordPress p
 
 The core requirements for contributing in this first phase of the product roadmap revolves entirely around the bcgov-comment-theme code repository, which is based entirely upon the Sage WordPress Starter Theme Framework (version 8.1.1).  
 
-- BCSage Framework [Roots.io/sage](https://roots.io/sage/) 
+- BCSage Framework [Roots.io/sage](https://roots.io/sage/), maintained on GitHub at [roots/sage](https://github.com/roots/sage)
 
 ## Installation
 
