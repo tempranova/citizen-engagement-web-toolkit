@@ -38,6 +38,12 @@ function setup() {
 
   // Tell the TinyMCE editor to use a custom stylesheet
   add_editor_style(Assets\asset_path('styles/editor-style.css'));
+
+  // Comment sorting plugin
+  if (!class_exists('CommentSorting')) {
+    //echo get_template_directory() .'/lib/custom/comment-sorting/comment-sorting.php';
+    include_once( get_template_directory() .'/lib/custom/comment-sorting/comment-sorting.php');
+  }
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
@@ -68,4 +74,5 @@ add_action('widgets_init', __NAMESPACE__ . '\\widgets_init');
 /**
  * Include custom comment callback function
  */
-include_once 'custom\bcgov_comment.php';
+//include_once 'custom\bcgov_comment.php';
+include_once 'custom/bcgov_comment.php';//Mac
