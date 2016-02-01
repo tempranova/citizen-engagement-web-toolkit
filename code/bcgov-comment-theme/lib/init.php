@@ -39,11 +39,11 @@ function setup() {
   // Tell the TinyMCE editor to use a custom stylesheet
   add_editor_style(Assets\asset_path('styles/editor-style.css'));
 
-  // Comment sorting plugin
-  if (!class_exists('CommentSorting')) {
-    //echo get_template_directory() .'/lib/custom/comment-sorting/comment-sorting.php';
-    include_once( get_template_directory() .'/lib/custom/comment-sorting/comment-sorting.php');
-  }
+//  //Comment sorting plugin
+//  if (!class_exists('CommentSorting')) {
+//    //echo get_template_directory() .'/lib/custom/comment-sorting/comment-sorting.php';
+//    include_once( get_template_directory() .'/lib/custom/comment-sorting/comment-sorting.php');
+//  }
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 

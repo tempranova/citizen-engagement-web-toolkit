@@ -30,3 +30,6 @@ foreach ($sage_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
+
+
+//add_filter('comments_array',function($comments){return array_reverse($comments);});
