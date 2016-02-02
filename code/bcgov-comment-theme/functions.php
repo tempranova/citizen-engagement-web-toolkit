@@ -20,6 +20,9 @@ $sage_includes = [
   'lib/nav.php',                   // Custom nav modifications
   'lib/gallery.php',               // Custom [gallery] modifications
   'lib/extras.php',                // Custom functions
+  'lib/custom/comment-sorting/PHP-stable-sort-functions/classes/StableSort.php',
+  'lib/custom/comment-sorting/PHP-stable-sort-functions/functions/sasort.php',
+  'lib/custom/comment-sorting/PHP-stable-sort-functions/functions/sarsort.php'
 ];
 
 foreach ($sage_includes as $file) {
@@ -30,6 +33,3 @@ foreach ($sage_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
-
-
-//add_filter('comments_array',function($comments){return array_reverse($comments);});

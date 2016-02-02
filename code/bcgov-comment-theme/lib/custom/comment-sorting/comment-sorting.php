@@ -7,39 +7,45 @@ Author: Chad Oakenfold
 Version: 0.1
 Author URI: http://oakenfold.ca
 */ 
-// class CommentSorting extends Walker {
+
+// require_once 'PHP-stable-sort-functions/classes/StableSort.php';
+// require_once 'PHP-stable-sort-functions/functions/sasort.php';
+// require_once 'PHP-stable-sort-functions/functions/sarsort.php';
 // 
-//     // Tell Walker where to inherit it's parent and id values
-//     var $db_fields = array(
-//         'parent' => 'comment_parent', 
-//         'id'     => 'comment_ID' 
-//     );
 // 
-//     /**
-//      * At the start of each element, output a <li> and <a> tag structure.
-//      * 
-//      * Note: Menu objects include url and title properties, so we will use those.
-//      */
-//     function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
-//         $output .= sprintf( "\n%s %s %s</br>\n",
-//             $item->comment_author,
-//             $item->comment_author_email,
-//             $item->comment_content
-//         );
+// class Walker_Simple_Example extends Walker {
+//   private $root_id;
+//   private $comments_root_replies = array();
+//   private $comments_root_recent = array();
+// 
+//   // Set the properties of the element which give the ID of the current item and its parent
+//   var $db_fields = array( 'parent' => 'comment_parent', 'id' => 'comment_ID' );
+// 
+//   // Displays end of a level. E.g '</ul>'
+//   // @see Walker::end_lvl()
+//   function end_lvl(&$output, $depth=0, $args=array()) {
+//     $output = array($this->comments_root_replies, $this->comments_root_recent);
+//   }
+// 
+//   // Displays start of an element. E.g '<li> Item Name'
+//   // @see Walker::start_el()
+//   function start_el(&$output, $item, $depth=0, $args=array()) {
+//     // top level root
+//     if ($item->comment_parent == 0) {
+//       $this->root_id = $item->comment_ID;
+//       $this->comments_root_replies[$this->root_id] = 0;
+//       $this->comments_root_recent[$this->root_id] = $item->comment_date_gmt;
+//     } else {
+//       // increment replies count
+//       $this->comments_root_replies[$this->root_id] = $this->comments_root_replies[$this->root_id] + 1;
+// 
+//       // check date
+//       $d_old = new DateTime($this->comments_root_recent[$this->root_id]);
+//       $d_new = new DateTime($item->comment_date_gmt);
+// 
+//       if ($d_new > $d_old) {
+//         $this->comments_root_recent[$this->root_id] = $item->comment_date_gmt;
+//       };
 //     }
-// 
-// }
-
-// $args = array(
-//   'post_id' => 4,
-//   'order' => 'ASC', // ASC | DESC
-// );
-// $comments = get_comments($args);
-//
-// // 4. Create a new instance of our walker...
-// $walk = new CommentSorting();
-//
-// // 5. Walk the tree and render the returned output as a one-dimensional array
-// print_r( $walk->walk( $comments, -1 ) );
-
-
+//   }
+// }// 

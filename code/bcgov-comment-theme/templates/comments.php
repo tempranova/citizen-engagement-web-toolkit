@@ -79,81 +79,50 @@ $walk = new Walker_Simple_Example();
 $walkOutput = $walk->walk( $comments, 0 );
 
 $walkOutputRepliesAsc = $walkOutput[0];
-asort($walkOutputRepliesAsc);
+//asort($walkOutputRepliesAsc);
+sasort($walkOutputRepliesAsc);
 
 $walkOutputRepliesDesc = $walkOutput[0];
-arsort($walkOutputRepliesDesc);
+//arsort($walkOutputRepliesDesc);
+sarsort($walkOutputRepliesDesc);
 
 $walkOutputDateAsc = $walkOutput[1];
-asort($walkOutputDateAsc);
+//asort($walkOutputDateAsc);
+sasort($walkOutputDateAsc);
 
 $walkOutputDateDesc = $walkOutput[1];
-arsort($walkOutputDateDesc);
+//arsort($walkOutputDateDesc);
+sarsort($walkOutputDateDesc);
+
+// $sortType = $walkOutputRepliesAsc;
+// $sortType = $walkOutputRepliesDesc;
+ $sortType = $walkOutputDateAsc;
+// $sortType = $walkOutputDateDesc;
 
 // build an 'index' array of the original comments
 $commentRef = array();
-
 foreach ($comments as $comment) {
   $commentRef[$comment->comment_ID] = $comment;
 }
-echo "walkOutputRepliesAsc\n\n\n";
-print_r($walkOutputRepliesAsc);
-echo "\n\n\n";
-echo "walkOutputRepliesDesc\n\n\n";
-print_r($walkOutputRepliesDesc);
-
-/*
-NOTE: 
-walkOutputRepliesDesc is being formatted like so:
-Array
-(
-    [12] => 3
-    [14] => 3
-    [21] => 2
-    [24] => 1
-    [20] => 0
-    [22] => 0
-    [23] => 0
-    [30] => 0
-    [26] => 0
-    [25] => 0
-    [31] => 0
-)
-
-But when wp_list_comments is processing arr_merge it's coming out inverted!
 
 
-Could be an issue with unstable sorting functions:
-
-'As the manual says, "If two members compare as equal, their order in the sorted array is undefined." 
-This means that the sort used is not "stable" and may change the order of elements that compare equal.'
-
-http://stackoverflow.com/a/4353844
-
-http://stackoverflow.com/a/12678577
-*/
-
+// put the top levels first 
 $start_section = array();
 $end_section = array();
 
-// hack to flip the start_section
-echo "\n\n\n";
-echo "asort walkOutputRepliesDesc\n\n\n";
-asort($walkOutputRepliesDesc);
-print_r($walkOutputRepliesDesc);
-
-foreach ($walkOutputRepliesDesc as $key => $val) {
+foreach ($sortType as $key => $val) {
   $start_section[] = $commentRef[$key];
 }
-
+// then the children
 foreach ($comments as $comment) {
    if ($comment->comment_parent != 0) {
      $end_section[] = $comment;
    }
 }
-
+// reunion
 $arr_merge = array_merge($start_section, $end_section);
 
+// output
 $args_list = ['style' => 'ol', 'short_ping' => true, 'callback' => 'bcgov_comments'];
 wp_list_comments( $args_list, $arr_merge );
 ?>
