@@ -51,25 +51,30 @@ if (post_password_required()) {
         $comments = get_comments( $args_get );
 
         class Walker_Simple_Example extends Walker {
-/*
-(
-    [comment_ID] => 25
-    [comment_post_ID] => 4
-    [comment_author] => @coak
-    [comment_author_email] => web@oakenfold.ca
-    [comment_author_url] => 
-    [comment_author_IP] => 127.0.0.1
-    [comment_date] => 2016-01-27 00:17:50
-    [comment_date_gmt] => 2016-01-27 00:17:50
-    [comment_content] => jkn
-    [comment_karma] => 0
-    [comment_approved] => 1
-    [comment_agent] => Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36
-    [comment_type] => 
-    [comment_parent] => 0
-    [user_id] => 1
-)
-*/
+          /*
+          (
+              [comment_ID] => 25
+              [comment_post_ID] => 4
+              [comment_author] => @coak
+              [comment_author_email] => web@oakenfold.ca
+              [comment_author_url] => 
+              [comment_author_IP] => 127.0.0.1
+              [comment_date] => 2016-01-27 00:17:50
+              [comment_date_gmt] => 2016-01-27 00:17:50
+              [comment_content] => jkn
+              [comment_karma] => 0
+              [comment_approved] => 1
+              [comment_agent] => Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36
+              [comment_type] => 
+              [comment_parent] => 0
+              [user_id] => 1
+          )
+          */
+
+// $a = array(1,2);
+// $b = $a; // $b will be a different array
+// $c = &$a; // $c will be a reference to $a
+
             private $root_id;
             private $comments_root_replies = array();
             private $comments_root_recent = array();
@@ -122,8 +127,88 @@ if (post_password_required()) {
         }
 
         $walk = new Walker_Simple_Example();
-        $zed = $walk->walk( $comments, 0 );
+        $walkOutput = $walk->walk( $comments, 0 );
+        $walkOutputRepliesAsc = $walkOutput[0];
+        $walkOutputRepliesDesc = $walkOutput[0];
 
+        $walkOutputDateAsc = $walkOutput[1];
+        $walkOutputDateDesc = $walkOutput[1];
+
+        
+        //echo 'Ascending';
+        asort($walkOutputRepliesAsc);
+        asort($walkOutputDateAsc);
+        //print_r($walkOutputRepliesAsc);
+        //print_r($walkOutputDateAsc);
+        //echo 'Descending';
+        arsort($walkOutputRepliesDesc);
+        arsort($walkOutputDateDesc);
+        //print_r($walkOutputRepliesDesc);
+        //print_r($walkOutputDateDesc);
+
+        echo "..................................... $ walkOutputRepliesAsc //\n";
+        print_r($walkOutputRepliesAsc);
+        echo "// $ walkOutputRepliesAsc ..................................... \n";
+
+        foreach ($walkOutputRepliesAsc as $key => $val) {
+            //echo "comment_ID = $key\n";
+            //$comment = array_search($key, array_column($comments, 'comment_ID'));
+            //print_r($comment);
+
+
+        }
+        //print_r($comments);
+
+        // repeated searches through arrays to pull data...
+
+        // $item = null;
+        // foreach($walkOutputRepliesAsc as $struct) {
+        //   if ($v == $struct->comment_ID) {
+        //     $item = $struct;
+        //     break;
+        //   }
+        // }
+
+        // loop once to build an 'index' array
+        $commentRef = array();
+
+        foreach ($comments as $comment) {
+          $commentRef[$comment->comment_ID] = $comment;
+        }
+
+        // find by id
+        $byId = $commentRef[$id];
+
+        echo "..................................... $ walkOutputRepliesAsc - > Key //\n";
+        foreach ($walkOutputRepliesAsc as $key => $val) {
+            print_r($commentRef[$key]);
+        }
+        echo "// $ walkOutputRepliesAsc - > Key ..................................... \n";
+
+        echo "..................................... $ comments //\n";
+        print_r($comments);
+        echo "// $ comments ..................................... \n";
+
+
+// Partial sort
+// $start_section = array();
+// $my_section = array();
+// $end_section = array();
+// $started = false;
+// foreach ($arr as $item) {
+//   if (strpos($item, '?param=my_val') !== false) {
+//     $my_section[] = $item;
+//     $started = true;
+//   } else {
+//     if(!$started) {
+//       $start_section[] = $item;
+//     } else {
+//       $end_section[] = $item;
+//     }
+//   }
+// }
+//     
+// $arr = array_merge($start_section, $my_section, $end_section);
 // $zed ===
 //       Array
 // (
