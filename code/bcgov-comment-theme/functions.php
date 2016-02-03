@@ -20,9 +20,9 @@ $sage_includes = [
   'lib/nav.php',                   // Custom nav modifications
   'lib/gallery.php',               // Custom [gallery] modifications
   'lib/extras.php',                // Custom functions
-  'lib/custom/comment-sorting/PHP-stable-sort-functions/classes/StableSort.php',
-  'lib/custom/comment-sorting/PHP-stable-sort-functions/functions/sasort.php',
-  'lib/custom/comment-sorting/PHP-stable-sort-functions/functions/sarsort.php'
+//  'lib/custom/comment-sorting/PHP-stable-sort-functions/classes/StableSort.php',
+//  'lib/custom/comment-sorting/PHP-stable-sort-functions/functions/sasort.php',
+//  'lib/custom/comment-sorting/PHP-stable-sort-functions/functions/sarsort.php'
 ];
 
 foreach ($sage_includes as $file) {
