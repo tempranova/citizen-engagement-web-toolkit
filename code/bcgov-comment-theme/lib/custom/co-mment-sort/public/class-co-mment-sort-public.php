@@ -100,4 +100,128 @@ class Co_Mment_Sort_Public {
 
 	}
 
+//  /**
+//   * 
+//   *
+//   * @since     1.0.0
+//   * @return    string    The version number of the plugin.
+//   */
+//  public function get_comment_sort() {
+//    // gets comments
+//    $args_get = array(
+//      'post_id' => get_the_ID(),
+//    );
+//
+//    $comments = get_comments( $args_get );
+//
+//    // returns array[0]= reply count, array[1]=date stamps
+//    $walk = new Walker_Co_Mment_Sort();
+//    $walkOutput = $walk->walk( $comments, 0 );
+//
+//    $walkOutputRepliesAsc = $walkOutput[0];
+//    sasort($walkOutputRepliesAsc);
+//
+//    $walkOutputRepliesDesc = $walkOutput[0];
+//    sarsort($walkOutputRepliesDesc);
+//
+//    $walkOutputDateAsc = $walkOutput[1];
+//    sasort($walkOutputDateAsc);
+//
+//    $walkOutputDateDesc = $walkOutput[1];
+//    sarsort($walkOutputDateDesc);
+//
+//    // $comment_root_sorted = $walkOutputRepliesAsc;
+//    // $comment_root_sorted = $walkOutputRepliesDesc;
+//     $comment_root_sorted = $walkOutputDateAsc;
+//    // $comment_root_sorted = $walkOutputDateDesc;
+//
+//    $comments_sorted = $this->merge_comment_array($comments, $comment_root_sorted)
+//
+//    return $comments_sorted;
+//  }
+
+  /**
+   * 
+   *
+   * @since     1.0.0
+   * @return    string    The version number of the plugin.
+   */
+  public function get_comment_sort_date($comments, $post_ID, $direction_bool=true) {
+    // returns array[0]= reply count, array[1]=date stamps
+    $walk = new Walker_Co_Mment_Sort();
+    $walkOutput = $walk->walk( $comments, 0 );
+    $walkOutputDate = $walkOutput[1];
+
+    if ($direction_bool == true) {
+      sasort($walkOutputDate);
+    } else {
+      sarsort($walkOutputDate);
+    }
+    
+    $comment_root_sorted = $walkOutputDate;
+
+    $comments_sorted = $this->merge_comment_array($comments, $comment_root_sorted);
+
+    return $comments_sorted;
+  }
+
+  /**
+   * 
+   *
+   * @since     1.0.0
+   * @return    array    Sorted comments array
+   */
+  public function get_comment_sort_replies($comments, $post_ID, $direction_bool=true) {
+
+    // returns array[0]= reply count, array[1]=date stamps
+    $walk = new Walker_Co_Mment_Sort();
+    $walkOutput = $walk->walk( $comments, 0 );
+    $walkOutputReplies = $walkOutput[0];
+
+    if ($direction_bool == true) {
+      sasort($walkOutputReplies);
+    } else {
+      sarsort($walkOutputReplies);
+    }
+
+    $comment_root_sorted = $walkOutputReplies;
+
+    $comments_sorted = $this->merge_comment_array($comments, $comment_root_sorted);
+
+    return $comments_sorted;
+  }
+
+  /**
+   * 
+   *
+   * @since     1.0.0
+   * @return    array    
+   */
+  public function merge_comment_array($comments, $comment_root_sorted) {
+    // build an 'index' array of the original comments
+    $commentRef = array();
+    foreach ($comments as $comment) {
+      $commentRef[$comment->comment_ID] = $comment;
+    }
+
+    // put the top levels first 
+    $start_section = array();
+    $end_section = array();
+
+    foreach ($comment_root_sorted as $key => $val) {
+      $start_section[] = $commentRef[$key];
+    }
+    // then the children
+    foreach ($comments as $comment) {
+       if ($comment->comment_parent != 0) {
+         $end_section[] = $comment;
+       }
+    }
+    // reunion
+    $arr_merge = array_merge($start_section, $end_section);
+
+    return $arr_merge;
+  }
+
+
 }
