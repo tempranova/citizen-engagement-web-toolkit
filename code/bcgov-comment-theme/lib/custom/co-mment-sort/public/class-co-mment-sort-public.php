@@ -140,15 +140,63 @@ class Co_Mment_Sort_Public {
 //    return $comments_sorted;
 //  }
 
+
+/*
+generate sort ui using hook
+
+use url params:
+../index.php/2016/01/27/test/comment-page-2/#comments?cos=r&cod=d
+cos
+type: sort
+r === replies
+d === date
+
+cod
+tupe: direction
+d === descending
+a === ascending
+
+update links in previous next to append sort
+*/
+
   /**
    * 
    *
    * @since     1.0.0
-   * @return    string    The version number of the plugin.
+   * @return    
    */
-  public function get_comment_sort_date($comments, $post_ID, $direction_bool=true) {
+  public function get_comment_sort($comments) {
+    
+    $direction = true;
+    if (isset($_GET['com_dir'])) {
+      if ($_GET['com_dir'] == "asc") {
+        $direction = false;
+      }
+    }
+
+    if (isset($_GET['com_sort'])) {
+        if ($_GET['com_sort'] == "replies") {
+          $output = $this->get_comment_sort_replies($comments, $direction);
+        } else {
+          $output = $this->get_comment_sort_date($comments, $direction);
+        }
+    } else {
+      $output = $this->get_comment_sort_date($comments, $direction);
+    }
+
+    return $output;
+  }
+
+  /**
+   * 
+   *
+   * @since     1.0.0
+   * @return    
+   */
+  public function get_comment_sort_date($comments, $direction_bool) {
     // returns array[0]= reply count, array[1]=date stamps
     $walk = new Walker_Co_Mment_Sort();
+
     $walkOutput = $walk->walk( $comments, 0 );
     $walkOutputDate = $walkOutput[1];
 
@@ -159,9 +207,7 @@ class Co_Mment_Sort_Public {
     }
     
     $comment_root_sorted = $walkOutputDate;
-
     $comments_sorted = $this->merge_comment_array($comments, $comment_root_sorted);
-
     return $comments_sorted;
   }
 
@@ -171,8 +217,7 @@ class Co_Mment_Sort_Public {
    * @since     1.0.0
    * @return    array    Sorted comments array
    */
-  public function get_comment_sort_replies($comments, $post_ID, $direction_bool=true) {
-
+  public function get_comment_sort_replies($comments, $direction_bool) {
     // returns array[0]= reply count, array[1]=date stamps
     $walk = new Walker_Co_Mment_Sort();
     $walkOutput = $walk->walk( $comments, 0 );
@@ -185,9 +230,7 @@ class Co_Mment_Sort_Public {
     }
 
     $comment_root_sorted = $walkOutputReplies;
-
     $comments_sorted = $this->merge_comment_array($comments, $comment_root_sorted);
-
     return $comments_sorted;
   }
 
@@ -222,6 +265,45 @@ class Co_Mment_Sort_Public {
 
     return $arr_merge;
   }
+
+  /**
+   * 
+   *
+   * @since     1.0.0
+   * @return    array    
+   */
+  public function comments_pagenum_link($content) {
+    
+
+    $dir = 'desc';
+    $sort = 'date';
+
+    if (isset($_GET['com_dir'])) {
+      if ($_GET['com_dir'] == "asc") {
+        $dir = 'asc';
+      }
+    }
+    if (isset($_GET['com_sort'])) {
+      if ($_GET['com_sort'] == "replies") {
+        $sort = 'replies';
+      }
+    }
+
+    $urlParts = parse_url($content);
+
+    $urlPre = $urlParts['scheme'] ."://". $urlParts['host'] ."/". $urlParts['path'];
+
+    $urlParams = 'com_sort='.$sort.'&com_dir='.$dir;
+
+    if ($urlParts['query']) {
+      $urlPost = $urlParts['query'] ."&". $urlParams;
+    } else {
+      $urlPost = "?". $urlParams;
+    }
+    
+    return $urlPre . $urlPost . ($urlParts['fragment'] ? '#'.$urlParts['fragment'] : '');
+  }
+
 
 
 }

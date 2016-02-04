@@ -185,8 +185,12 @@ class Co_Mment_Sort {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
     
-    $this->loader->add_action( 'comments_array', $plugin_public, 'get_comment_sort_replies', 10, 3 );
-    //$this->loader->add_filter( 'comments_array', $plugin_public, 'get_comment_sort_replies', 10, 3 );
+    $this->loader->add_filter( 'comments_array', $plugin_public, 'get_comment_sort');
+    //$this->loader->add_filter( 'previous_comments_link_attributes', $plugin_public, 'comments_link_attributes');
+    //$this->loader->add_filter( 'next_comments_link_attributes', $plugin_public, 'comments_link_attributes');
+    $this->loader->add_filter( 'get_comments_pagenum_link', $plugin_public, 'comments_pagenum_link');
+    
+    //$this->loader->add_filter( 'comments_array', $plugin_public, 'get_comment_sort_date', 10, 3 );
  
 	}
 

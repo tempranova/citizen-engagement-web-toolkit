@@ -10,18 +10,21 @@ class Walker_Co_Mment_Sort extends Walker {
 
   // Displays end of a level. E.g '</ul>'
   // @see Walker::end_lvl()
-  function end_lvl(&$output, $depth=0, $args=array()) {
-    $output = array($this->comments_root_replies, $this->comments_root_recent);
-  }
+  //function end_lvl(&$output, $depth=0, $args=array()) {
+    // it looks like end_lvl isn't consistently called for some reason
+    // using end_el instead
+  //}
 
   // Displays start of an element. E.g '<li> Item Name'
   // @see Walker::start_el()
   function start_el(&$output, $item, $depth=0, $args=array()) {
     // top level root
     if ($item->comment_parent == 0) {
+
       $this->root_id = $item->comment_ID;
       $this->comments_root_replies[$this->root_id] = 0;
       $this->comments_root_recent[$this->root_id] = $item->comment_date_gmt;
+
     } else {
       // increment replies count
       $this->comments_root_replies[$this->root_id] = $this->comments_root_replies[$this->root_id] + 1;
@@ -34,5 +37,9 @@ class Walker_Co_Mment_Sort extends Walker {
         $this->comments_root_recent[$this->root_id] = $item->comment_date_gmt;
       };
     }
+  }
+
+  function end_el( &$output, $item, $depth = 0, $args = array()) {
+    $output = array($this->comments_root_replies, $this->comments_root_recent);
   }
 }
