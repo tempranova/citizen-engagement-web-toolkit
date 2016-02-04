@@ -256,34 +256,6 @@ gulp.task('wiredep', function() {
     .pipe(gulp.dest(path.source + 'styles'));
 });
 
-
-// ### copyTheme
-// `gulp copyTheme --target` - Copy theme to different location
-gulp.task('copyTheme', function() {
-
-  var relativeOffset = '../../../../';
-  var wordpressLocation = 'Citizens Engagement/wp-content/themes/bcgov-comment-theme';
-  var toCopy = [
-    // Include all
-    '**',
-    // Exclude
-    '!bower_components/**', 
-    '!node_modules/**',
-    '!ruleset.xml',
-    '!bower.json',
-    '!gulpfile.js',
-    '!CHANGELOG.md',
-    '!CONTRIBUTING.md',
-    '!LICENSE.md',
-    '!package.json',
-    '!README.md',
-    '!screenshot.png'
-];
-
-  gulp.src(toCopy, { dot: true })
-    .pipe(gulp.dest(relativeOffset + wordpressLocation));
-});
-
 // ### Gulp
 // `gulp` - Run a complete build. To compile for production run `gulp --production`.
 gulp.task('default', ['clean'], function() {

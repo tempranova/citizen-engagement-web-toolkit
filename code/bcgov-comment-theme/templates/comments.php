@@ -16,6 +16,7 @@ if (post_password_required()) {
       <?php wp_list_comments(['style' => 'ol', 'short_ping' => true, 'callback' => 'bcgov_comments']);
       ?>
     </ol>
+
     <?php if (get_comment_pages_count() > 1 && get_option('page_comments')) : ?>
       <nav>
         <ul class="pager">
