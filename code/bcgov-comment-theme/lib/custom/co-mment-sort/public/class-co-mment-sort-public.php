@@ -95,8 +95,7 @@ class Co_Mment_Sort_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->co_mment_sort, plugin_dir_url( __FILE__ ) . 'js/co-mment-sort.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->co_mment_sort, plugin_dir_url( __FILE__ ) . 'js/co-mment-sort-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -303,6 +302,53 @@ update links in previous next to append sort
     
     return $urlPre . $urlPost . ($urlParts['fragment'] ? '#'.$urlParts['fragment'] : '');
   }
+
+  /**
+   * 
+   *
+   * @since     1.0.0
+   * @return    array    
+   */
+  public function comments_ui() {
+    // default sort options
+    $dateState = 'is-desc';
+    $direction = 'is-desc';
+    $inputDir = 'desc';
+    $inputSort = 'date';
+    $repliesState = 'is-inactive';
+    $sort = 'date';
+
+    if (isset($_GET['com_dir'])) {
+      if ($_GET['com_dir'] == "asc") {
+        $direction = 'is-asc';
+        $inputDir = 'asc';
+      }
+    }
+
+
+    // change defaults
+    if (isset($_GET['com_sort'])) {
+        if ($_GET['com_sort'] == "replies") {
+          $repliesState = $direction;
+          $dateState = 'is-inactive';
+          $inputSort = 'replies';
+        } else {
+          $repliesState = 'is-inactive';
+          $dateState = $direction;
+          $inputSort = 'date';
+        }
+    }
+    ?>
+    <form class='js-co-form' method='get' action=''>
+      <input class='js-co-input-sort' type='hidden' name='com_sort' value='<?php echo $inputSort; ?>'>
+      <input class='js-co-input-dir' type='hidden' name='com_dir' value='<?php echo $inputDir; ?>'>
+      <button type='button' class='btn co_btn-sort co_btn-sort--date js-co-btn-sort-date' data-state='<?php echo $dateState; ?>'>Date</button>
+      <button type='button' class='btn co_btn-sort co_btn-sort--replies js-co-btn-sort-replies' data-state='<?php echo $repliesState; ?>'>Replies</button>
+    </form>
+    <?php 
+  }
+
+
 
 
 
