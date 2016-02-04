@@ -35,4 +35,4 @@ Pull requests are welcome. If you would like to contribute a package, please see
 ## License
 Code, data and content in this repository are licensed under different licenses.
 
-- All code in the /code directory is licensed under the Apache License 2.0. See [LICENSE.Apache-2.0](https://github.com/bcgov/citizen-engagement-web-toolkit/blob/master/code/LICENSE.Apache.2.0) in the appropriate directories.
+- All code in the /code directory is licensed under The MIT License. See [LICENSE.MIT](https://github.com/bcgov/citizen-engagement-web-toolkit/blob/master/code/LICENSE.MIT) in the appropriate directories.
