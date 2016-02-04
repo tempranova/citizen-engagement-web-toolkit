@@ -9,13 +9,13 @@
  * that starts the plugin.
  *
  * @link              http://oakenfold.ca
- * @since             1.0.0
+ * @since             0.0.1
  * @package           Co_Mment_Sort
  *
  * @wordpress-plugin
- * Plugin Name:       Co mment sort
+ * Plugin Name:       CO Mment sort
  * Plugin URI:        http://oakenfold.ca/co-mment-sort-uri/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Sort comments by date & number of replies per comment
  * Version:           1.0.0
  * Author:            Chad Oakenfold
  * Author URI:        http://oakenfold.ca/
