@@ -18,7 +18,7 @@
  *
  * @package    Co_Mment_Sort
  * @subpackage Co_Mment_Sort/public
- * @author     Your Name <email@example.com>
+ * @author     Chad Oakenfold <web@oakenfold.ca>
  */
 class Co_Mment_Sort_Public {
 
@@ -99,47 +99,6 @@ class Co_Mment_Sort_Public {
 
 	}
 
-//  /**
-//   * 
-//   *
-//   * @since     1.0.0
-//   * @return    string    The version number of the plugin.
-//   */
-//  public function get_comment_sort() {
-//    // gets comments
-//    $args_get = array(
-//      'post_id' => get_the_ID(),
-//    );
-//
-//    $comments = get_comments( $args_get );
-//
-//    // returns array[0]= reply count, array[1]=date stamps
-//    $walk = new Walker_Co_Mment_Sort();
-//    $walkOutput = $walk->walk( $comments, 0 );
-//
-//    $walkOutputRepliesAsc = $walkOutput[0];
-//    sasort($walkOutputRepliesAsc);
-//
-//    $walkOutputRepliesDesc = $walkOutput[0];
-//    sarsort($walkOutputRepliesDesc);
-//
-//    $walkOutputDateAsc = $walkOutput[1];
-//    sasort($walkOutputDateAsc);
-//
-//    $walkOutputDateDesc = $walkOutput[1];
-//    sarsort($walkOutputDateDesc);
-//
-//    // $comment_root_sorted = $walkOutputRepliesAsc;
-//    // $comment_root_sorted = $walkOutputRepliesDesc;
-//     $comment_root_sorted = $walkOutputDateAsc;
-//    // $comment_root_sorted = $walkOutputDateDesc;
-//
-//    $comments_sorted = $this->merge_comment_array($comments, $comment_root_sorted)
-//
-//    return $comments_sorted;
-//  }
-
-
 /*
 generate sort ui using hook
 
@@ -165,7 +124,9 @@ update links in previous next to append sort
    * @return    
    */
   public function get_comment_sort($comments) {
-    
+    if (count($comments) == 0) {
+      return $comments;
+    };
     $direction = true;
     if (isset($_GET['com_dir'])) {
       if ($_GET['com_dir'] == "asc") {
@@ -310,42 +271,45 @@ update links in previous next to append sort
    * @return    array    
    */
   public function comments_ui() {
-    // default sort options
-    $dateState = 'is-desc';
-    $direction = 'is-desc';
-    $inputDir = 'desc';
-    $inputSort = 'date';
-    $repliesState = 'is-inactive';
-    $sort = 'date';
 
-    if (isset($_GET['com_dir'])) {
-      if ($_GET['com_dir'] == "asc") {
-        $direction = 'is-asc';
-        $inputDir = 'asc';
-      }
-    }
+    if (have_comments()){
+      // default sort options
+      $dateState = 'is-desc';
+      $direction = 'is-desc';
+      $inputDir = 'desc';
+      $inputSort = 'date';
+      $repliesState = 'is-inactive';
+      $sort = 'date';
 
-
-    // change defaults
-    if (isset($_GET['com_sort'])) {
-        if ($_GET['com_sort'] == "replies") {
-          $repliesState = $direction;
-          $dateState = 'is-inactive';
-          $inputSort = 'replies';
-        } else {
-          $repliesState = 'is-inactive';
-          $dateState = $direction;
-          $inputSort = 'date';
+      if (isset($_GET['com_dir'])) {
+        if ($_GET['com_dir'] == "asc") {
+          $direction = 'is-asc';
+          $inputDir = 'asc';
         }
+      }
+
+
+      // change defaults
+      if (isset($_GET['com_sort'])) {
+          if ($_GET['com_sort'] == "replies") {
+            $repliesState = $direction;
+            $dateState = 'is-inactive';
+            $inputSort = 'replies';
+          } else {
+            $repliesState = 'is-inactive';
+            $dateState = $direction;
+            $inputSort = 'date';
+          }
+      }
+      ?>
+      <form class='js-co-form' method='get' action=''>
+        <input class='js-co-input-sort' type='hidden' name='com_sort' value='<?php echo $inputSort; ?>'>
+        <input class='js-co-input-dir' type='hidden' name='com_dir' value='<?php echo $inputDir; ?>'>
+        <button type='button' class='btn co_btn-sort co_btn-sort--date js-co-btn-sort-date' data-state='<?php echo $dateState; ?>'>Date</button>
+        <button type='button' class='btn co_btn-sort co_btn-sort--replies js-co-btn-sort-replies' data-state='<?php echo $repliesState; ?>'>Replies</button>
+      </form>
+      <?php 
     }
-    ?>
-    <form class='js-co-form' method='get' action=''>
-      <input class='js-co-input-sort' type='hidden' name='com_sort' value='<?php echo $inputSort; ?>'>
-      <input class='js-co-input-dir' type='hidden' name='com_dir' value='<?php echo $inputDir; ?>'>
-      <button type='button' class='btn co_btn-sort co_btn-sort--date js-co-btn-sort-date' data-state='<?php echo $dateState; ?>'>Date</button>
-      <button type='button' class='btn co_btn-sort co_btn-sort--replies js-co-btn-sort-replies' data-state='<?php echo $repliesState; ?>'>Replies</button>
-    </form>
-    <?php 
   }
 
 
