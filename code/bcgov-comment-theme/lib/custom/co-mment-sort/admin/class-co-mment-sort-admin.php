@@ -18,7 +18,7 @@
  *
  * @package    Co_Mment_Sort
  * @subpackage Co_Mment_Sort/admin
- * @author     Your Name <email@example.com>
+ * @author     Chad Oakenfold <web@oakenfold.ca>
  */
 class Co_Mment_Sort_Admin {
 
