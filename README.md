@@ -33,5 +33,9 @@ To report bugs/issues/feature requests, please file an [issue](https://github.co
 Pull requests are welcome. If you would like to contribute a package, please see our [CONTRIBUTING guidelines](https://github.com/bcgov/citizen-engagement-web-toolkit/blob/master/CONTRIBUTING.md).
 
 ## License
+The code in this repository is licensed under different licenses.
 
-- All code is licensed under The MIT License. See [LICENSE.MIT](https://github.com/bcgov/citizen-engagement-web-toolkit/blob/LM02041/LICENSE) in the appropriate directories.
+- All new code in the /code directory is licensed under the GNU General Public License (GPL), version 2. See [LICENSE.GPL.2.0](https://github.com/bcgov/citizen-engagement-web-toolkit/blob/master/code/LICENSE.GPL.2.0.0) in the appropriate directories.
+
+- All code in the /code/bcgov-comment-theme directory is licensed under [The MIT License (MIT)](https://github.com/bcgov/citizen-engagement-web-toolkit/blob/master/code/bcgov-comment-theme/LICENSE.md) from the code originators. See the appropriate directory.
+
