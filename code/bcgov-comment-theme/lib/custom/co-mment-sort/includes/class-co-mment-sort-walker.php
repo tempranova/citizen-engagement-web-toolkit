@@ -17,7 +17,7 @@ class Walker_Co_Mment_Sort extends Walker {
 
   // Displays start of an element. E.g '<li> Item Name'
   // @see Walker::start_el()
-  function start_el(&$output, $item, $depth=0, $args=array(), $current_object_id) {
+  function start_el(&$output, $item, $depth=0, $args=array(), $current_object_id=0) {
     // top level root
     if ($item->comment_parent == 0) {
 
