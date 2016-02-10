@@ -17,7 +17,7 @@ class Walker_Co_Mment_Sort extends Walker {
 
   // Displays start of an element. E.g '<li> Item Name'
   // @see Walker::start_el()
-  function start_el(&$output, $item, $depth=0, $args=array()) {
+  function start_el(&$output, $item, $depth=0, $args=array(), $current_object_id) {
     // top level root
     if ($item->comment_parent == 0) {
 
@@ -29,13 +29,14 @@ class Walker_Co_Mment_Sort extends Walker {
       // increment replies count
       $this->comments_root_replies[$this->root_id] = $this->comments_root_replies[$this->root_id] + 1;
 
-      // check date
-      $d_old = new DateTime($this->comments_root_recent[$this->root_id]);
-      $d_new = new DateTime($item->comment_date_gmt);
+      // check date of children
+      // commented out due to requirement to sort by parent date
+      // $d_old = new DateTime($this->comments_root_recent[$this->root_id]);
+      // $d_new = new DateTime($item->comment_date_gmt);
 
-      if ($d_new > $d_old) {
-        $this->comments_root_recent[$this->root_id] = $item->comment_date_gmt;
-      };
+      // if ($d_new > $d_old) {
+      //   $this->comments_root_recent[$this->root_id] = $item->comment_date_gmt;
+      // };
     }
   }
 
