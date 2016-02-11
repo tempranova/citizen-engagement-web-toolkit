@@ -68,4 +68,5 @@ add_action('widgets_init', __NAMESPACE__ . '\\widgets_init');
 /**
  * Include custom comment callback function
  */
-include_once 'custom\bcgov_comment.php';
+//include_once 'custom\bcgov_comment.php';
+include_once 'custom/bcgov_comment.php';//Had problems using the above path on apple computer

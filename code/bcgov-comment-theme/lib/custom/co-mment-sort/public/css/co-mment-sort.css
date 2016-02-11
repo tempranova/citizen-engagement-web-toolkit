@@ -1,0 +1,26 @@
+
+.co_btn-sort {
+  cursor: pointer;
+  color: #fff;
+  background-color: #27ae60;
+  border-color: #295;
+}
+.co_btn-sort:active,
+button.co_btn-sort:hover {
+  color: #fff;
+  background-color: #1e8449;
+  border-color: #176739;
+}
+.co_btn-sort[data-state='is-inactive'] {
+  opacity: 0.4;
+}
+.co_btn-sort:hover[data-state='is-inactive'] {
+  opacity: 0.75;
+}
+.co_btn-sort[data-state='is-desc']:after {
+  content: " ▼";
+}
+
+.co_btn-sort[data-state='is-asc']:after{
+  content: " ▲";
+}
