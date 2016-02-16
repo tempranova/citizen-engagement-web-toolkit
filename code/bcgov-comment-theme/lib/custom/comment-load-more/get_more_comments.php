@@ -1,13 +1,42 @@
 <?php 
+/**
+ * Takes care of AJAX request and returns HTML
+ *
+ *
+ * @link       http://tempranova.com
+ * @since      1.0.0
+ *
+ * @package    comment-load-more
+ */
+
+/**
+ * First, get various variables from the query string (this will determine what function we run)
+ * 
+ */
     $post_id = $_GET["post_id"];
     $parent_comment_id = $_GET["parent_id"];
     $comment_index = $_GET["comment_index"];
+
+/**
+ * Load basic WP functions
+ * 
+ */
     require_once( dirname(dirname(dirname( dirname( __FILE__ ) ) ) ) . '/wp-load.php' );
+
+/**
+ * Get the desired pagination number from wp_options
+ * 
+ */
     $posts_per_page = get_option('comments_per_page');
 
-    // If this is loading child posts
+
+/**
+ * Loading reply-level posts
+ * Match comment_parent_id, and comment_post_ID, with pagination and offset
+ * A set of secondary calls are performed to see if any of these comments have children (if they do, it is added as 'parent_of')
+ * Echos HTML
+ */
     if($parent_comment_id) {
-        // This gets me all this level of replies; although doesn't tell me about next level of replies
         global $wpdb;
         $new_comments_from_db = $wpdb->get_results( 
             "
@@ -22,7 +51,6 @@
         $comments_to_add = [];
         foreach ( $new_comments_from_db as $comment ) {
             $comment_parent = $comment->{'comment_parent'};
-            // Do another DB call to find out if they have children too
             $count_children_of_children = $wpdb->get_var( 
                 "
                 SELECT COUNT(*)
@@ -40,9 +68,13 @@
         wp_list_comments(['style' => 'ol', 'short_ping' => true, 'callback' => 'bcgov_comments'],$comments_to_add);
     }
 
-    // If this is expanding an amount of posts
+/**
+ * Loading parent-level posts
+ * Match comment_parent to 0, comment_post_ID, with pagination and offset
+ * A set of secondary calls are performed to see if any of these comments have children (if they do, it is added as 'parent_of')
+ * Echos HTML
+ */
     if(!$parent_comment_id) {
-        // This gets me top level comments
         global $wpdb;
         $new_comments_from_db = $wpdb->get_results( 
             "
@@ -55,7 +87,6 @@
         $comments_to_add = [];
         foreach ( $new_comments_from_db as $comment ) {
             $comment_parent = $comment->{'comment_parent'};
-            // Do another DB call to find out if they have children too
             $count_children_of_children = $wpdb->get_var( 
                 "
                 SELECT COUNT(*)

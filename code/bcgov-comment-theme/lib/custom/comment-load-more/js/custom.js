@@ -1,7 +1,7 @@
-// In this file, I check for clicks on "See X Replies" buttons,
-// Then do appropriate AJAX calls using the ID of the parent comment (it's in the id of the li, with 'comment-' on front)
-// Looking for comments in the DB that have that as a parent
-// This only allows one nested level of loading at a time (each level is only tied to one set of children)
+/*
+* In this file, we set up handlers for clicks on "See X Replies" buttons and do appropriate AJAX calls
+* While there's a fair amount of DOM hopping in here, it should implement without issue for this case
+*/
 
 // Need to get dir of plugin for AJAX call, and post id for right comments
 var plugin_directory = jQuery('#comment-ajax-plugin-directory').val();
@@ -18,7 +18,6 @@ jQuery('.load-more-comments').each(function() {
         var parent_comment_id = parent_li_id.substring(parent_li_id.indexOf("-")+1);
         // Get number of parent comments currently up
         var number_of_current_comments = 0;
-        // Kind of ugly...
         jQuery(this).parent().parent().prev('.reply-top-level').children().each(function() {
             number_of_current_comments = number_of_current_comments+1;
         });
@@ -31,15 +30,15 @@ jQuery('.load-more-comments').each(function() {
           type : 'POST',
           dataType: 'html',
         }).done(function(data) {
+            // Testing number of items returned against total, for interface display
             var articles = jQuery(data).find('article');
-            console.log(number_of_current_comments);
             if(number_of_current_comments>0) {
                 jQuery(that).parent().parent().prev('.reply-top-level').append(data);
             } else {
                 jQuery(that).parent().after('<ul id="parent-comment-id-'+parent_comment_id+'" class="pager secondary-pager"><li class="next"><a href="#" class="load-more-comments paged-5" style="float:left;">More Replies →</a></li></ul>');
                 jQuery(that).parent().hide().html(data).show();
             }
-            console.log(articles.length);
+            // If fewer articles come along than the paged number, then fadeOut the button (both, in case another tree is triggered and it needs to go down the DOM)
             if(articles.length<parseInt(paged)) {
                 jQuery(that).closest('.secondary-pager').fadeOut();
                 jQuery('#parent-comment-id-'+parent_comment_id).hide();
@@ -49,15 +48,16 @@ jQuery('.load-more-comments').each(function() {
         });
     });
 });
-// This grabs another page of comments according to amount user has set on options page
+// This grabs another page of top-level comments according to amount user has set on options page
 jQuery('.load-more-comments-paginated').click(function(e) {
     e.preventDefault();
     var paged = jQuery('#comments-paged').val();
-    // Get number of parent comments currently up
+    // Get number of parent comments currently up; this only grabs from the top-level "comment-list" div
     var number_of_current_comments = 0;
     jQuery('.comment-list').children('.depth-1').each(function() {
         number_of_current_comments = number_of_current_comments+1;
     });
+    // Send off to a custom PHP file that will handle the ID and return stuff nicely
     var url = plugin_directory + "/get_more_comments.php?post_id="+post_id+"&comment_index="+number_of_current_comments;
     var that = this;
     jQuery.ajax({
@@ -65,7 +65,7 @@ jQuery('.load-more-comments-paginated').click(function(e) {
       type : 'POST',
       dataType: 'html',
     }).done(function(data) {
-        // Remove "Newer Comments" button if it returns less than the paginated amount (it's loaded everything)
+        // Remove "Newer Comments" button if it returns less than the paginated amount
         var articles = jQuery(data).find('article');
         if(articles.length<parseInt(paged)) {
             jQuery('.load-more-comments-paginated').fadeOut();
@@ -74,9 +74,4 @@ jQuery('.load-more-comments-paginated').click(function(e) {
     }).fail(function(err) {
         console.log(err);
     });
-    // Send off to a custom PHP file that will handle the ID and return stuff nicely
 });
-
-// Other possibility is that they clicked the "Load More" button for parent-level replies
-// In that case, send the total number of parent comments loaded so far (serves as an index)
-// Will this still accurately get back the children of those parents? (logic in AJAX page should handle it just fine)

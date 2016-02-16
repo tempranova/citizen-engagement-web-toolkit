@@ -6,7 +6,7 @@ README
 <p>I decided to ramble a bit and see what I could make. Check out the sample site at http://tempranova.com/mortgage/2012/01/03/template-comments/, this is set
 up using the code on the repo and runs your custom comment code modifications in lib/custom/bcgov_comment.php. <strong>Currently pagination is set to 3 items per button 
 press. This is so you can see the various features and the sub-pagination happening with replies.</strong></p>
-<p>I set this up as a plugin but it can be moved in the same way that co-ment-sort was if you like.</p>
+<p>This operates as a plugin, like co-mment-sort.</p>
 <ol>
     <li>Comments are first filtered using comments_array filter, removing child comments while storing their counts in parent comments (to properly display numbers)</li>
     <li>A few hidden fields are added for AJAX calls later; the plugin directory, an initialization element, the chosen number for paging comments/replies</li>
@@ -23,7 +23,7 @@ press. This is so you can see the various features and the sub-pagination happen
     <li>Using Settings > Discussion, user can set desired pagination (currently both comments and replies have the same number) and can select ascending/descending in terms of time</li>
     <li>Can show any number of initial comments desired via filter (whether top level or children)</li>
 </ul>
-<h4>Upcoming Fixes</h4>
+<h4>Upcoming Fixes (as required)</h4>
 <ul>
     <li>Bringing up to speed with coding conventions as per https://github.com/bcgov/citizen-engagement-web-toolkit/blob/master/CONTRIBUTING.md</li>
     <li>A bit too much jQuery traversing, will clean up JS overall</li>
@@ -32,8 +32,8 @@ press. This is so you can see the various features and the sub-pagination happen
     <li>More efficient initial SQL querying (I will test loading with high numbers (1000+) of comments)</li>
     <li>Will add easy way to change text on "Newer Comment" button</li>
     <li>Options page possible if desired (commented out currently)</li>
-    <li>A bit too much jQuery traversing, will clean up overall </li>
-    <li>Fixing comment number displays</li>
+    <li>Fixing comment number displays to appear on all buttons</li>
+    <li>Fixing plurals for numbers</li>
 </ul>
 
 ======
