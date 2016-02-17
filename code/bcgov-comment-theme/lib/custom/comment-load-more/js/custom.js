@@ -1,7 +1,13 @@
-/*
-* In this file, we set up handlers for clicks on "See X Replies" buttons and do appropriate AJAX calls
-* While there's a fair amount of DOM hopping in here, it should implement without issue for this case
-*/
+/**
+ * JS for doing AJAX
+ * In this file, we set up handlers for clicks on "See X Replies" buttons and do appropriate AJAX calls
+ * While there's a fair amount of DOM hopping in here, it should implement without issue for this case
+ *
+ * @link       http://tempranova.com
+ * @since      1.0.0
+ *
+ * @package    comment-load-more
+ */
 
 // Need to get dir of plugin for AJAX call, and post id for right comments
 var plugin_directory = jQuery('#comment-ajax-plugin-directory').val();

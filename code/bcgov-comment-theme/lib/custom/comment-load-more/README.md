@@ -1,12 +1,9 @@
-README
-
-<h2>AJAXy Comment Loading</h2>
-<p>Basic functionality is here now but there are still a few issues to be worked out.<p>
+<h2>Comment Load More</h2>
+<p>An AJAXy way of loading and viewing comments in WP.<p>
 <h4>How it works</h4>
-<p>I decided to ramble a bit and see what I could make. Check out the sample site at http://tempranova.com/mortgage/2012/01/03/template-comments/, this is set
-up using the code on the repo and runs your custom comment code modifications in lib/custom/bcgov_comment.php. <strong>Currently pagination is set to 3 items per button 
+<p>Check out the sample site at http://tempranova.com/mortgage/2012/01/03/template-comments/. <strong>Currently pagination is set to 3 items per button 
 press. This is so you can see the various features and the sub-pagination happening with replies.</strong></p>
-<p>This operates as a plugin, like co-mment-sort.</p>
+<p>This operates as a plugin, like co-mment-sort, so please install as a normal plugin.</p>
 <ol>
     <li>Comments are first filtered using comments_array filter, removing child comments while storing their counts in parent comments (to properly display numbers)</li>
     <li>A few hidden fields are added for AJAX calls later; the plugin directory, an initialization element, the chosen number for paging comments/replies</li>
@@ -16,25 +13,15 @@ press. This is so you can see the various features and the sub-pagination happen
     <li>Sends back HTML, along with subset buttons, to Javascript, and that HTML is inserted above the Newer Comments button</li>
     <li>User clicks on "Load __ More" replies: AJAX sent with post_id, number of comments displayed, and parent_comment_id
     <li>PHP queries DB for comments with that post_id and comment_parent, with pagination and offset in place, sends back HTML which is inserted</li>
-</ol
-<h4>How to use</h4>
+</ol>
+<h4>Options and settings</h4>
 <ul>
     <li>User can set desired text for Newer/Lower Comments button by modifying https://codex.wordpress.org/Template_Tags/next_comments_link/li>
     <li>Using Settings > Discussion, user can set desired pagination (currently both comments and replies have the same number) and can select ascending/descending in terms of time</li>
     <li>Can show any number of initial comments desired via filter (whether top level or children)</li>
 </ul>
 <h4>Upcoming Fixes (as required)</h4>
-<ul>
-    <li>Bringing up to speed with coding conventions as per https://github.com/bcgov/citizen-engagement-web-toolkit/blob/master/CONTRIBUTING.md</li>
-    <li>A bit too much jQuery traversing, will clean up JS overall</li>
-    <li>Styling of comment boxes (right now they are squished in the left, missing some padding, etc)</li>
-    <li>Addition of proper sorting by reverse date</li>
-    <li>More efficient initial SQL querying (I will test loading with high numbers (1000+) of comments)</li>
-    <li>Will add easy way to change text on "Newer Comment" button</li>
-    <li>Options page possible if desired (commented out currently)</li>
-    <li>Fixing comment number displays to appear on all buttons</li>
-    <li>Fixing plurals for numbers</li>
-</ul>
+<p>All completed now, awaiting feedback for further fixes if required.</p>
 
 ======
 

@@ -1,3 +1,6 @@
 .load-more-comments, .load-more-comments-paginated {
     cursor: pointer;
 }
+footer .reply {
+    width: 100%;
+}
