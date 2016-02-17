@@ -65,7 +65,6 @@ jQuery('.load-more-comments-paginated').click(function(e) {
     });
     // Send off to a custom PHP file that will handle the ID and return stuff nicely
     var url = plugin_directory + "/get_more_comments.php?post_id="+post_id+"&comment_index="+number_of_current_comments;
-    var that = this;
     jQuery.ajax({
       url: url,
       type : 'POST',

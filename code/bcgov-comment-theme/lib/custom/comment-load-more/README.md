@@ -16,12 +16,14 @@ press. This is so you can see the various features and the sub-pagination happen
 </ol>
 <h4>Options and settings</h4>
 <ul>
-    <li>User can set desired text for Newer/Lower Comments button by modifying https://codex.wordpress.org/Template_Tags/next_comments_link/li>
+    <li>User can set desired text for Newer/Lower Comments button by modifying https://codex.wordpress.org/Template_Tags/next_comments_link</li>
     <li>Using Settings > Discussion, user can set desired pagination (currently both comments and replies have the same number) and can select ascending/descending in terms of time</li>
     <li>Can show any number of initial comments desired via filter (whether top level or children)</li>
 </ul>
-<h4>Upcoming Fixes (as required)</h4>
-<p>All completed now, awaiting feedback for further fixes if required.</p>
+<h4>Optional additional features</h4>
+<ul>
+    <li>Settings page with separate reply and comment subset numbers (currently they are the same)</li>
+</ul>
 
 ======
 

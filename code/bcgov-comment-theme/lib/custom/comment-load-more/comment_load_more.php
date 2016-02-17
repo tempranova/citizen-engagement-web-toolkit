@@ -34,7 +34,6 @@ if ( ! defined( 'WPINC' ) ) {
 function remove_child_comments( $comments , $post_id ){ 
     $parent_comments_only = [];
     $number_of_children = new stdClass();
-    $pagination_number = get_option('comments_per_page');
     $comments  = array_reverse($comments);
     foreach($comments as $key=>$comment) {
         $comment_parent = $comment->{'comment_parent'};
@@ -80,15 +79,15 @@ add_filter( "comment_reply_link", "add_load_more", 420, 3 );
  * User can change the text to whatever they want using https://codex.wordpress.org/Template_Tags/next_comments_link
  * Number of "paged" can be set in Settings > Discussion
  */
-function your_function($atts) {
+function more_comments_atts($atts) {
     return 'class="load-more-comments-paginated paged-' . get_option('comments_per_page') . '" style="float:left;"';
 }
-add_filter( 'next_comments_link_attributes', 'your_function', 10, 1 );
+add_filter( 'next_comments_link_attributes', 'more_comments_atts', 10, 1 );
 
 
 /**
  * Enqueue JS for AJAX and CSS for minor styling of buttons
- * 
+ * JS always loaded after jQuery, in footer, so can make use of jQuery directly
  */
 function placespeak_scripts() {
     wp_register_script( 'custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'));
