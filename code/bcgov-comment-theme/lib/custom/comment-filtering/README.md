@@ -13,12 +13,5 @@
 <h4>Features available if desired</h4>
 <ul>
     <li>Combining search term and date searches</li>
-</ul>
-
-<h4>To Do</h4>
-<ul>
-    <li>Front and back end validation</li>
-    <li>Only enqueue on appropriate pages? (any kind of post, page, or post type)</li>
-    <li>Include information about the library I'm using</li>
     <li>Add 'all time' to dropdown</li>
 </ul>
