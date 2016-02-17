@@ -23,6 +23,7 @@ press. This is so you can see the various features and the sub-pagination happen
 <h4>Optional additional features</h4>
 <ul>
     <li>Settings page with separate reply and comment subset numbers (currently they are the same)</li>
+    <li>A small loading graphic while AJAX returns</li>
 </ul>
 
 ======

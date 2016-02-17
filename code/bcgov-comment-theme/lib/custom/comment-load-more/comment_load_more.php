@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Comment Load More
- * Plugin URI:        http://tempranova.com/mortgage/2012/01/03/template-comments/
+ * Plugin URI:        http://tempranova.com/custom-plugin-for-ajaxy-wordpress-comments/
  * Description:       Allow AJAXy loading of comments.
  * Version:           1.0.0
  * Author:            Victor Temprano
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
  * First, create a filter to initially not show any comment that is a reply (anything with a comment_parent)
  * This reverses the array and checks for a parent variable, ensuring that number of child comments is passed as array to be checked later
  */
-function remove_child_comments( $comments , $post_id ){ 
+function clm_remove_child_comments( $comments , $post_id ){ 
     $parent_comments_only = [];
     $number_of_children = new stdClass();
     $comments  = array_reverse($comments);
@@ -48,53 +48,53 @@ function remove_child_comments( $comments , $post_id ){
     $parent_comments_only = array_reverse($parent_comments_only);
     return $parent_comments_only;
 }
-add_filter( 'comments_array' , 'remove_child_comments' , 10, 2 ); 
+add_filter( 'comments_array' , 'clm_remove_child_comments' , 10, 2 ); 
 
 /**
  * Some information that JS needs to do AJAX properly
  * This also adds a secret initializer for the load-more-comments click event listener, in case others aren't loaded right away
  */
-function add_plugin_dir() {
+function clm_add_plugin_dir() {
     echo '<input type="hidden" id="comment-ajax-plugin-directory" value="' . plugin_dir_url(__FILE__) . '">';
     echo '<input type="hidden" class="load-more-comments">';
     echo '<input type="hidden" id="comments-paged" value="' . get_option('comments_per_page') . '">';
 }
-add_action('comment_form_before','add_plugin_dir');
+add_action('comment_form_before','clm_add_plugin_dir');
 
 /**
  * Add a "Load More" button under each comment that has replies
  * This sneakily hooks into the Reply button/link, to avoid mussing with template files
  * Uses same style and layout as the old "newer/older comments" button
  */
-function add_load_more($reply_link_html, $args, $comment) {
+function clm_add_load_more($reply_link_html, $args, $comment) {
     if($comment->{'parent_of'}>0) {
         $reply_link_html = $reply_link_html . '<ul class="pager reply-top-level" style="text-align:left;"><li class="next load-more-comments"><a style="float:none;">Load ' . $comment->{'parent_of'} . ' More</a></li></ul>';
     }
     return $reply_link_html;
 }
-add_filter( "comment_reply_link", "add_load_more", 420, 3 );
+add_filter( "comment_reply_link", "clm_add_load_more", 420, 3 );
 
 /**
  * Add class to paginated link, and pull to left
  * User can change the text to whatever they want using https://codex.wordpress.org/Template_Tags/next_comments_link
  * Number of "paged" can be set in Settings > Discussion
  */
-function more_comments_atts($atts) {
+function clm_more_comments_atts($atts) {
     return 'class="load-more-comments-paginated paged-' . get_option('comments_per_page') . '" style="float:left;"';
 }
-add_filter( 'next_comments_link_attributes', 'more_comments_atts', 10, 1 );
+add_filter( 'next_comments_link_attributes', 'clm_more_comments_atts', 10, 1 );
 
 
 /**
  * Enqueue JS for AJAX and CSS for minor styling of buttons
  * JS always loaded after jQuery, in footer, so can make use of jQuery directly
  */
-function load_comments_custom_scripts() {
-    wp_register_script( 'custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'));
+function clm_load_comments_custom_scripts() {
+    wp_register_script( 'clm-custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'));
     wp_enqueue_style( 'custom-css', plugin_dir_url(__FILE__) . '/css/custom.css' );
-	wp_enqueue_script( 'custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'),'0.7.7',true);
+	wp_enqueue_script( 'clm-custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'),'0.7.7',true);
 }
 
-add_action( 'wp_enqueue_scripts', 'load_comments_custom_scripts' );
+add_action( 'wp_enqueue_scripts', 'clm_load_comments_custom_scripts' );
 
 ?>
