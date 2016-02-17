@@ -44,18 +44,15 @@ function cf_filtering_add_input_boxes() {
             <div>
               <input type="hidden" id="comment_filtering_plugin_dir" value="<?php echo plugin_dir_url(__FILE__); ?>">
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation"><a class="cf_select_tab" href="#cf_search_by_term" aria-controls="cf_search_by_term" role="tab" data-toggle="tab">Search by term</a></li>
-                <li role="presentation"><a class="cf_select_tab" href="#cf_search_by_date" aria-controls="cf_search_by_date" role="tab" data-toggle="tab">Filter by date</a></li>
+                <li role="presentation"><a class="cf_select_tab" href="#cf_search_by" aria-controls="cf_search_by" role="tab" data-toggle="tab">Search by term or date</a></li>
               </ul>
 
               <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" id="cf_search_by_term">
+                <div role="tabpanel" class="tab-pane" id="cf_search_by">
                     <div class="form-group">
                         <input type="text" class="form-control" name="comment_filtering_search" placeholder="Search term or author...">
                     </div>
-                    <button class="comment_filtering_go btn btn-info">Search comments</button>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="cf_search_by_date">
+                    <p><strong>Filter by date:</strong></p>
                     <div class="form-group">
                         <div id="comment_filtering_datepicker">
                             <div class="input-daterange input-group" id="datepicker">
@@ -72,9 +69,11 @@ function cf_filtering_add_input_boxes() {
                             <option value="today">Today only</option>
                             <option value="week">Last 7 days</option>
                             <option value="month">Last 30 days</option>
+                            <option value="all">All comments</option>
                         </select>
                     </div>
-                    <button class="comment_filtering_go btn btn-info">Filter comments</button>
+                    <button class="comment_filtering_go btn btn-info">Search comments</button>
+                    <button class="comment_filtering_reset btn btn-default">See all comments</button>
                 </div>
               </div>
             </div>
