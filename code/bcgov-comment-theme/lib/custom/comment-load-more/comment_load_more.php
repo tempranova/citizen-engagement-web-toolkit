@@ -89,12 +89,12 @@ add_filter( 'next_comments_link_attributes', 'more_comments_atts', 10, 1 );
  * Enqueue JS for AJAX and CSS for minor styling of buttons
  * JS always loaded after jQuery, in footer, so can make use of jQuery directly
  */
-function placespeak_scripts() {
+function load_comments_custom_scripts() {
     wp_register_script( 'custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'));
     wp_enqueue_style( 'custom-css', plugin_dir_url(__FILE__) . '/css/custom.css' );
 	wp_enqueue_script( 'custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'),'0.7.7',true);
 }
 
-add_action( 'wp_enqueue_scripts', 'placespeak_scripts' );
+add_action( 'wp_enqueue_scripts', 'load_comments_custom_scripts' );
 
 ?>
