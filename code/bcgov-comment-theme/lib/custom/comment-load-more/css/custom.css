@@ -1,9 +1,0 @@
-/**
- * CSS for front-end comment button, and width of reply box
- */
-.load-more-comments, .load-more-comments-paginated {
-    cursor: pointer;
-}
-footer .reply {
-    width: 100%;
-}
