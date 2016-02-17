@@ -91,7 +91,7 @@ add_filter( 'next_comments_link_attributes', 'clm_more_comments_atts', 10, 1 );
  */
 function clm_load_comments_custom_scripts() {
     wp_register_script( 'clm-custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'));
-    wp_enqueue_style( 'custom-css', plugin_dir_url(__FILE__) . '/css/custom.css' );
+    wp_enqueue_style( 'clm-custom-css', plugin_dir_url(__FILE__) . '/css/custom.css' );
 	wp_enqueue_script( 'clm-custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'),'0.7.7',true);
 }
 
