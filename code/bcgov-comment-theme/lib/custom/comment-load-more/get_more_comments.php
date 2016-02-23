@@ -27,7 +27,7 @@
  * Get the desired pagination number from wp_options
  * 
  */
-    $posts_per_page = get_option('comments_per_page');
+    $posts_per_page = get_option('clm_comments_per_page');
 
 
 /**
@@ -38,26 +38,34 @@
  */
     if($parent_comment_id) {
         global $wpdb;
-        $new_comments_from_db = $wpdb->get_results( 
-            "
-            SELECT *
-            FROM $wpdb->comments
-            WHERE comment_parent = " . $parent_comment_id . "
-                AND comment_post_ID = " . $post_id . "
-            LIMIT $comment_index, $posts_per_page
-            "
+        $query_array = array($parent_comment_id,$post_id,$comment_index,$posts_per_page);
+        $new_comments_from_db = $wpdb->get_results(
+            $wpdb->prepare(
+                "
+                SELECT *
+                FROM $wpdb->comments
+                WHERE comment_parent = %d
+                    AND comment_post_ID = %d
+                LIMIT %d, %d
+                ",
+                $query_array
+            )
         );
-
+        
         $comments_to_add = [];
         foreach ( $new_comments_from_db as $comment ) {
             $comment_parent = $comment->{'comment_parent'};
+            $query_array = array($comment->{'comment_ID'},$post_id);
             $count_children_of_children = $wpdb->get_var( 
-                "
-                SELECT COUNT(*)
-                FROM $wpdb->comments
-                WHERE comment_parent = " . $comment->{'comment_ID'} . "
-                    AND comment_post_ID = " . $post_id . "
-                "
+                $wpdb->prepare(
+                    "
+                    SELECT COUNT(*)
+                    FROM $wpdb->comments
+                    WHERE comment_parent = %d
+                        AND comment_post_ID = %d
+                    ",
+                    $query_array
+                )
             );
             if($count_children_of_children) {
                 $comment->{'parent_of'} = $count_children_of_children;
@@ -76,23 +84,31 @@
  */
     if(!$parent_comment_id) {
         global $wpdb;
+        $query_array = array($post_id,$comment_index,$posts_per_page);
         $new_comments_from_db = $wpdb->get_results( 
-            "
-            SELECT *
-            FROM $wpdb->comments
-            WHERE comment_parent = 0 AND comment_post_ID = " . $post_id . "
-            LIMIT $comment_index, $posts_per_page
-            "
+            $wpdb->prepare(
+                "
+                SELECT *
+                FROM $wpdb->comments
+                WHERE comment_parent = 0 AND comment_post_ID = %d
+                LIMIT %d, %d
+                ",
+                $query_array
+            )
         );
         $comments_to_add = [];
         foreach ( $new_comments_from_db as $comment ) {
             $comment_parent = $comment->{'comment_parent'};
+            $query_array = array($comment->{'comment_ID'},$post_id);
             $count_children_of_children = $wpdb->get_var( 
-                "
-                SELECT COUNT(*)
-                FROM $wpdb->comments
-                WHERE comment_parent = " . $comment->{'comment_ID'} . " AND comment_post_ID = " . $post_id . "
-                "
+                $wpdb->prepare(
+                    "
+                    SELECT COUNT(*)
+                    FROM $wpdb->comments
+                    WHERE comment_parent = %d AND comment_post_ID = %d
+                    ",
+                    $query_array
+                )
             );
             if($count_children_of_children) {
                 $comment->{'parent_of'} = $count_children_of_children;

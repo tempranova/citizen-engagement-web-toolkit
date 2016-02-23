@@ -14,6 +14,7 @@
     var plugin_directory = $('#comment-ajax-plugin-directory').val();
     var post_id = $('main article:first-child').attr('class').split(' ')[0];
     post_id = post_id.substring(post_id.indexOf("-")+1);
+    $('.load-more-comments-paginated').text('Load More');
 
     // This automatically loads ALL the subcomments for a given comment
     $('.load-more-comments').each(function() {

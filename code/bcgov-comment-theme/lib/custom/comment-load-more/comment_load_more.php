@@ -38,9 +38,15 @@ function clm_remove_child_comments( $comments , $post_id ){
     foreach($comments as $key=>$comment) {
         $comment_parent = $comment->{'comment_parent'};
         if($comment_parent!=='0') {
+            if(!$number_of_children->{$comment->{'comment_parent'}}) {
+                $number_of_children->{$comment->{'comment_parent'}} = 0;
+            }
             $number_of_children->{$comment->{'comment_parent'}} += 1;
         }
         if($comment_parent=='0') {
+            if(!$number_of_children->{$comment->{'comment_parent'}}) {
+                $number_of_children->{$comment->{'comment_parent'}} = 0;
+            }
             $comment->{'parent_of'} = $number_of_children->{$comment->{'comment_ID'}};
             array_push($parent_comments_only,$comment);
         }
@@ -57,7 +63,7 @@ add_filter( 'comments_array' , 'clm_remove_child_comments' , 10, 2 );
 function clm_add_plugin_dir() {
     echo '<input type="hidden" id="comment-ajax-plugin-directory" value="' . plugin_dir_url(__FILE__) . '">';
     echo '<input type="hidden" class="load-more-comments">';
-    echo '<input type="hidden" id="comments-paged" value="' . get_option('comments_per_page') . '">';
+    echo '<input type="hidden" id="comments-paged" value="' . get_option('clm_comments_per_page') . '">';
 }
 add_action('comment_form_before','clm_add_plugin_dir');
 
@@ -80,7 +86,7 @@ add_filter( "comment_reply_link", "clm_add_load_more", 420, 3 );
  * Number of "paged" can be set in Settings > Discussion
  */
 function clm_more_comments_atts($atts) {
-    return 'class="load-more-comments-paginated paged-' . get_option('comments_per_page') . '" style="float:left;"';
+    return 'class="load-more-comments-paginated paged-' . get_option('clm_comments_per_page') . '" style="float:left;"';
 }
 add_filter( 'next_comments_link_attributes', 'clm_more_comments_atts', 10, 1 );
 
@@ -91,10 +97,51 @@ add_filter( 'next_comments_link_attributes', 'clm_more_comments_atts', 10, 1 );
  */
 function clm_load_comments_custom_scripts() {
     wp_register_script( 'clm-custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'));
-    wp_enqueue_style( 'clm-custom-css', plugin_dir_url(__FILE__) . '/css/custom.css' );
+    wp_enqueue_style( 'custom-css', plugin_dir_url(__FILE__) . '/css/custom.css' );
 	wp_enqueue_script( 'clm-custom-js', plugin_dir_url(__FILE__) . '/js/custom.js', array('jquery'),'0.7.7',true);
 }
 
 add_action( 'wp_enqueue_scripts', 'clm_load_comments_custom_scripts' );
+
+
+/**
+ * Adding PlaceSpeak item to Settings in wp-admin
+ * 
+ */
+add_action( 'admin_menu', 'clm_plugin_menu' );
+function clm_plugin_menu() {
+	add_options_page( 'Comment Load More Options', 'Comment Load More', 'manage_options', 'comment-load-more', 'clm_plugin_options' );
+}
+/**
+ * PlaceSpeak Options page
+ * Has table storage options, ability to add a new app, and listing of apps with ability to edit them and archive
+ */
+function clm_plugin_options() {
+    
+	if ( !current_user_can( 'manage_options' ) )  {
+		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+	}
+    
+    $posts_per_page = get_option('clm_comments_per_page');
+    
+    ?>
+    
+	<div class="wrap">
+        <h3>Comment Load More Options</h3>
+        <form action="" method="POST">
+            <input type="number" name="number_of_clm_comments" placeholder="10" value="<?php echo $posts_per_page; ?>"></input>The number of comments loaded each time the user clicks on "Load More"</strong></p>
+            <input type="submit" name="clm_comments_per_page" value="Save">
+        </form>
+    </div>
+<?php }
+
+function clm_save_comments_per_page() {
+	if ( isset( $_POST['clm_comments_per_page'] ) ) {
+        update_option('clm_comments_per_page', $_POST['number_of_clm_comments']);
+        update_option('comments_per_page', $_POST['number_of_clm_comments']);
+        update_option('page_comments', 1);
+    }
+}
+clm_save_comments_per_page();
 
 ?>
