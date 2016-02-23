@@ -31,7 +31,6 @@
         
         // Send off AJAX call with parameters
         if(search_term||start_date&&end_date||selected_range) {
-            console.log(plugin_directory + 'ajax_comment_filter.php?post_id=' + post_id + '&search_term=' + search_term + '&start_date=' + start_date + '&end_date=' + end_date + '&selected_range=' + selected_range);
             $.ajax({
               url: plugin_directory + 'ajax_comment_filter.php?post_id=' + post_id + '&search_term=' + search_term + '&start_date=' + start_date + '&end_date=' + end_date + '&selected_range=' + selected_range,
               type : 'POST',

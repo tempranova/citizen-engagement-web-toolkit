@@ -33,13 +33,17 @@
  */
     if($search_term&&!$start_date&&!$end_date&&$selected_range=='default') {
         global $wpdb;
+        $query_array = array($post_id,'%'.$search_term.'%','%'.$search_term.'%');
         $found_comments = $wpdb->get_results( 
-            "
-            SELECT *
-            FROM $wpdb->comments
-            WHERE comment_post_id = " . $post_id . "
-            AND (comment_content LIKE '%" . $search_term . "%' OR comment_author LIKE '%" . $search_term . "%')
-            "
+            $wpdb->prepare(
+                "
+                SELECT *
+                FROM $wpdb->comments
+                WHERE comment_post_id = %d
+                AND (comment_content LIKE %s OR comment_author LIKE %s)
+                ",
+                $query_array
+            )
         );
         
         return_comment_list($found_comments);
@@ -53,14 +57,18 @@
  */
     if($start_date&&$end_date&&!$search_term&&$selected_range=='default') {
         global $wpdb;
+        $query_array = array($post_id,$start_date.' 00:00:00',$end_date.' 23:59:59');
         $found_comments = $wpdb->get_results( 
-            "
-            SELECT *
-            FROM $wpdb->comments
-            WHERE comment_post_id = " . $post_id . "
-            AND comment_date >= '" . $start_date . " 00:00:00'
-            AND comment_date <= '" . $end_date . " 23:59:59'
-            "
+            $wpdb->prepare(
+                "
+                SELECT *
+                FROM $wpdb->comments
+                WHERE comment_post_id = %d
+                AND comment_date >= %s
+                AND comment_date <= %s
+                ",
+                $query_array
+            )
         );
         
         return_comment_list($found_comments);
@@ -95,14 +103,18 @@
         }
         
         global $wpdb;
+        $query_array = array($post_id,$selected_start_range,$selected_end_range);
         $found_comments = $wpdb->get_results( 
-            "
-            SELECT *
-            FROM $wpdb->comments
-            WHERE comment_post_id = " . $post_id . "
-            AND comment_date >= '" . $selected_start_range . "'
-            AND comment_date <= '" . $selected_end_range . "'
-            "
+            $wpdb->prepare(
+                "
+                SELECT *
+                FROM $wpdb->comments
+                WHERE comment_post_id = %d
+                AND comment_date >= %s
+                AND comment_date <= %s
+                ",
+                $query_array
+            )
         );
         
         return_comment_list($found_comments);
@@ -115,9 +127,9 @@
  * Echos HTML
  */    
         
-    if($selected_range!=='default'||$start_date&&$end_date||$search_term) {
+    if($selected_range||$start_date&&$end_date||$search_term) {
         // If has range and start and end, use the range
-        if($selected_range&&start_date&&end_date) {
+        if($selected_range!=='default'&&start_date&&end_date) {
             $selected_start_range = '';
             $selected_end_range = '';
             switch ($selected_range) {
@@ -139,30 +151,38 @@
                     break;
             }
             global $wpdb;
+            $query_array = array($post_id,$selected_start_range,$selected_end_range,'%'.$search_term.'%','%'.$search_term.'%');
             $found_comments = $wpdb->get_results( 
-                "
-                SELECT *
-                FROM $wpdb->comments
-                WHERE comment_post_id = " . $post_id . "
-                AND comment_date >= '" . $selected_start_range . "'
-                AND comment_date <= '" . $selected_end_range . "'
-                AND (comment_content LIKE '%" . $search_term . "%' OR comment_author LIKE '%" . $search_term . "%')
-                "
+                $wpdb->prepare(
+                    "
+                    SELECT *
+                    FROM $wpdb->comments
+                    WHERE comment_post_id = %d
+                    AND comment_date >= %s
+                    AND comment_date <= %s
+                    AND (comment_content LIKE %s OR comment_author LIKE %s)
+                    ",
+                    $query_array
+                )
             );
             return_comment_list($found_comments);
             
         } else {
             
             global $wpdb;
+            $query_array = array($post_id,$start_date.' 00:00:00',$end_date.' 23:59:59','%'.$search_term.'%','%'.$search_term.'%');
             $found_comments = $wpdb->get_results( 
-                "
-                SELECT *
-                FROM $wpdb->comments
-                WHERE comment_post_id = " . $post_id . "
-                AND comment_date >= '" . $start_date . " 00:00:00'
-                AND comment_date <= '" . $end_date . " 23:59:59'
-                AND (comment_content LIKE '%" . $search_term . "%' OR comment_author LIKE '%" . $search_term . "%')
-                "
+                $wpdb->prepare(
+                    "
+                    SELECT *
+                    FROM $wpdb->comments
+                    WHERE comment_post_id = %d
+                    AND comment_date >= %s
+                    AND comment_date <= %s
+                    AND (comment_content LIKE %s OR comment_author LIKE %s)
+                    ",
+                    $query_array
+                )
             );
             return_comment_list($found_comments);
             
@@ -171,12 +191,16 @@
 
     if($reset_results) {
         global $wpdb;
+        $query_array = array($post_id);
         $found_comments = $wpdb->get_results( 
-            "
-            SELECT *
-            FROM $wpdb->comments
-            WHERE comment_post_id = " . $post_id . "
-            "
+            $wpdb->prepare(
+                "
+                SELECT *
+                FROM $wpdb->comments
+                WHERE comment_post_id = " . $post_id . "
+                ",
+                $query_array
+            )
         );
         return_comment_list($found_comments);
     }
