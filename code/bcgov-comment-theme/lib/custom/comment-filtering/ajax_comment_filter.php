@@ -18,12 +18,12 @@
     $end_date = false;
     $selected_range = false;
     $reset_results = false;
-    $post_id = filter_var($_GET["post_id"],FILTER_SANITIZE_STRING);
-    $search_term = filter_var($_GET["search_term"],FILTER_SANITIZE_STRING);
-    $start_date = filter_var($_GET["start_date"],FILTER_SANITIZE_STRING);
-    $end_date = filter_var($_GET["end_date"],FILTER_SANITIZE_STRING);
-    $selected_range = filter_var($_GET["selected_range"],FILTER_SANITIZE_STRING);
-    $reset_results = filter_var($_GET["reset"],FILTER_SANITIZE_STRING);
+    if(isset($_GET["post_id"])) { $post_id = filter_var($_GET["post_id"],FILTER_SANITIZE_STRING); }
+    if(isset($_GET["search_term"])) { $search_term = filter_var($_GET["search_term"],FILTER_SANITIZE_STRING); }
+    if(isset($_GET["start_date"])) { $start_date = filter_var($_GET["start_date"],FILTER_SANITIZE_STRING); }
+    if(isset($_GET["end_date"])) { $end_date = filter_var($_GET["end_date"],FILTER_SANITIZE_STRING); }
+    if(isset($_GET["selected_range"])) { $selected_range = filter_var($_GET["selected_range"],FILTER_SANITIZE_STRING); }
+    if(isset($_GET["reset"])) { $reset_results = filter_var($_GET["reset"],FILTER_SANITIZE_STRING); }
 
 /**
  * Load basic WP functions
