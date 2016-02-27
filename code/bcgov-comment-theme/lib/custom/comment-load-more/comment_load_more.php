@@ -37,18 +37,20 @@ function clm_remove_child_comments( $comments , $post_id ){
     $comments  = array_reverse($comments);
     foreach($comments as $key=>$comment) {
         $comment_parent = $comment->{'comment_parent'};
-        if($comment_parent!=='0') {
-            if(!$number_of_children->{$comment->{'comment_parent'}}) {
-                $number_of_children->{$comment->{'comment_parent'}} = 0;
+        if (isset($number_of_children->{$comment->{'comment_parent'}})) {
+            if($comment_parent!=='0') {
+                $number_of_children->{$comment->{'comment_parent'}}++;
             }
-            $number_of_children->{$comment->{'comment_parent'}} += 1;
-        }
-        if($comment_parent=='0') {
-            if(!$number_of_children->{$comment->{'comment_parent'}}) {
-                $number_of_children->{$comment->{'comment_parent'}} = 0;
+            if($comment_parent=='0') {
+                if (isset($number_of_children->{$comment->{'comment_ID'}})) {
+                    $comment->{'parent_of'} = $number_of_children->{$comment->{'comment_ID'}};
+                } else {
+                    $comment->{'parent_of'} = 0;
+                }
+                array_push($parent_comments_only,$comment);
             }
-            $comment->{'parent_of'} = $number_of_children->{$comment->{'comment_ID'}};
-            array_push($parent_comments_only,$comment);
+        } else {
+            $number_of_children->{$comment->{'comment_parent'}} = 0;
         }
     }
     $parent_comments_only = array_reverse($parent_comments_only);
