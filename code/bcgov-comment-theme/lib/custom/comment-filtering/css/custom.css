@@ -1,0 +1,11 @@
+/**
+ * CSS for display of tabs with proper padding
+ */
+#cf_selected_range {
+    display:inline;
+    width:auto;
+    margin-left:15px;
+}
+#cf_search_by {
+    padding: 15px;
+}
