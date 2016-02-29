@@ -86,7 +86,7 @@
  * By default returns newest to oldest
  * Echos HTML
  */
-    if($selected_range&&!start_date&&!end_date&&!search_term) {
+    if($selected_range&&!$start_date&&!$end_date&&!$search_term) {
         $selected_start_range = '';
         $selected_end_range = '';
         switch ($selected_range) {
